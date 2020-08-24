@@ -1,0 +1,41 @@
+{
+  "name": "louise",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "./node_modules/.bin/webpack-dev-server --progress --config webpack.config.js --open",
+    "build": "./node_modules/.bin/webpack --progress --config webpack.config.js",
+    "postbuild": "node scripts/postbuild.js",
+    "prebuild": "rimraf dist",
+    "publish": "git subtree push --prefix dist origin gh-pages"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.10.4",
+    "@babel/core": "^7.10.4",
+    "@babel/preset-env": "^7.10.4",
+    "@babel/preset-react": "^7.10.4",
+    "babel-loader": "^8.1.0",
+    "css-loader": "^3.6.0",
+    "csv-loader": "^3.0.3",
+    "fs-extra": "^9.0.1",
+    "style-loader": "^1.2.1",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "dependencies": {
+    "d3": "^5.16.0",
+    "d3-array": "^2.5.1",
+    "d3-format": "^2.0.0",
+    "d3-hierarchy": "^1.1.9",
+    "d3-interpolate": "^1.4.0",
+    "d3-scale": "^3.2.1",
+    "d3-scale-chromatic": "^1.5.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "styled-components": "^5.1.1"
+  }
+}
