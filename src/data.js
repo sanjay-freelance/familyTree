@@ -2,6 +2,69 @@ export const data = {
 	"name":"Josie",
 	"surname":"Vasquez",
 	"age":90,
+	"relation": 0,
+	"gender":"female",
+	"children":[
+		{
+			"name":"John Smith",
+			"surname":"Ellis",
+			"occupation": 'GIS Professional',
+			"location": 'New York City, New York',
+			"donated": '$0.75 Mn',
+			"themes": '16',
+			"funds": '32',
+			"profilePic": 'john',
+			'lastContribution': '21 August 2020',
+			"age":65,
+			"relation": 4,
+			"gender":"male",
+		},
+		{
+			"name":"Andy",
+			"surname":"Vasquez",
+			"age":61,
+			"relation": 3,
+			"image": '1',
+			"gender":"male"
+		},
+		{
+			"name":"Warren",
+			"surname":"Vasquez",
+			"age":56,
+			"relation": 3,
+			"image": '2',
+			"gender":"female"
+		},
+		{
+			"name":"Anne Ellis",
+			"surname":"Walker",
+			"age":43,
+			"relation": 2,
+			"image": '1',
+			"gender":"female"
+		},
+		{
+			"name":"Bill",
+			"surname":"Lane",
+			"age":24,
+			"relation": 2,
+			"image": '2',
+			"gender":"male",
+		},
+		{
+			"name":"Lida",
+			"surname":"Lane",
+			"age":44,
+			"relation": 1,
+			"gender":"female",
+		}
+	]
+}
+
+export const dataTee = {
+	"name":"Josie",
+	"surname":"Vasquez",
+	"age":90,
 	"wealth": 50,
 	"gender":"female",
 	"children":[

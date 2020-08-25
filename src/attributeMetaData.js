@@ -1,5 +1,5 @@
 export const sumIteratorMetadata = {
 	age: (nodeData)=> nodeData['age'],
-	wealth: (nodeData)=> nodeData['wealth'],
+	relation: (nodeData)=> nodeData['relation'],
 	dataId: (nodeData)=> nodeData['dataId']
 };

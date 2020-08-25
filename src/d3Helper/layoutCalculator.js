@@ -16,7 +16,7 @@ function getTreeMapLayoutCalculator(width,height){
 	return treemap()
 	.tile(customTiling(width,height))
 	.size([width, height])
-	.paddingInner(2)
+	.paddingInner(12)
 	.round(false);
 }
 
