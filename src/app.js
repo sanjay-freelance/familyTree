@@ -75,18 +75,13 @@ function FamilyTree(props){
 								onChange={attributeChangeHandler}>
 				Weight
 			</DropDown>
-
-			<CheckBox defaultValue={false}
-								onChange={expandChangeHandler}>
-				Expand Tree
-			</CheckBox>
 		</div>
 
 		<div className='family-tree'>
 			<TreeMap data={data}
 							 valueAttribute={valueAttribute}
 							 sumIterator={sumIteratorMetadata[valueAttribute]}
-							 expandTree={expandTree}/>
+							 expandTree={expandTree} hidePath={true}/>
 		</div>
 
 

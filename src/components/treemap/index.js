@@ -9,7 +9,7 @@ import './style.css';
 
 
 export default function TreeMap(props){
-	const {data, width = 500, height = 500, valueAttribute = 'age', expandTree = false, sumIterator} = props;
+	const {data, width = 500, height = 500, valueAttribute = 'age', expandTree = false, sumIterator, hidePath=false} = props;
 
 	/* Hooks */
 	const [rootNode, setRootNode] = useState(null);
@@ -79,20 +79,36 @@ export default function TreeMap(props){
 	const nodes = rootNode ? (expandTree ? rootNode.leaves() : rootNode.children) : null;
 	if (nodes && nodes.length > 0) {
 		nodesUI = nodes.map((childNode)=>{
-			return <TreeNode key={childNode.data.dataId} node={childNode}
-											 onNodeClick={()=>setSelectedNodeAsRootNode(childNode)}
+			return <TreeNode key={childNode.data.dataId}
+											 node={childNode}
 											 xScale={xScaleRef.current}
 											 yScale={yScaleRef.current}
 											 colorScale={colorScaleRef.current}/>
 		});
 	}
 
+	const relativeContainerStyle = {
+		position: 'relative',
+		width: width,
+		height: height
+	};
+
+	const absoluteContainerStyle = {
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		width: width,
+		height: height
+	};
+
 	return (
 	<div className='tree-map'>
-		<BreadCrumbs node={rootNode} onItemClick={setSelectedNodeAsRootNode}/>
-		<svg height={height} width={width}>
-			{nodesUI}
-		</svg>
+		{hidePath ? null : <BreadCrumbs node={rootNode} onItemClick={setSelectedNodeAsRootNode}/>}
+		<div style={relativeContainerStyle}>
+			<div style={absoluteContainerStyle}>
+				{nodesUI}
+			</div>
+		</div>
 	</div>
 	)
 }

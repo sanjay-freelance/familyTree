@@ -20,6 +20,7 @@
     "babel-loader": "^8.1.0",
     "css-loader": "^3.6.0",
     "csv-loader": "^3.0.3",
+    "file-loader": "^6.0.0",
     "fs-extra": "^9.0.1",
     "style-loader": "^1.2.1",
     "webpack": "^4.43.0",

@@ -9,8 +9,8 @@ import {hierarchy} from "d3-hierarchy";
 function getRootNodeWithTreeValues(data, sumIterator){
 	return hierarchy(data)
 	.sum(sumIterator)
-	.sort(function (a, b) {
-		return b.height - a.height || b.value - a.value
+	.sort(function (a, b) { // ascending order, so that low values get bigger square
+		return  a.value - b.value
 	})
 }
 

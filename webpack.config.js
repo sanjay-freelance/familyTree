@@ -36,6 +36,12 @@ const config = {
 						skipEmptyLines: true
 					}
 				}
+			},
+			{
+				test: /\.(png|svg|jpg|gif)$/,
+				use: {
+					loader: 'file-loader'
+				}
 			}
 		]
 
@@ -47,7 +53,7 @@ const config = {
 			'hooks': path.resolve(__dirname,'src/abstracts/hooks/'),
 			'ui': path.resolve(__dirname,'src/abstracts/ui/'),
 			'components': path.resolve(__dirname,'src/components/'),
-			'd3Helper': path.resolve(__dirname,'src/d3Helper/'),
+			'd3Helper': path.resolve(__dirname,'src/d3Helper/')
 		}
 	},
 	devServer: {
