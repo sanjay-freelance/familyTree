@@ -97,7 +97,7 @@ export default function TreeNode(props){
 	);
 }
 
-// todo : Bad code: move specific logic out of here, use css or styleComponent
+// todo : Bad code: move data specific logic out of here, use css or styleComponent
 function MouseOverDiv(props){
 	const {data} = props;
 	const {name,occupation,location,
@@ -197,7 +197,7 @@ function MouseOverDiv(props){
 		fontSize: '20px',
 	}
 
-	const contributeAt = `Last contributed on ${lastContribution}`
+	const contributeAt = `Last contributed on ${lastContribution}`;
 
 	return (
 		<div style={containerStyle}>

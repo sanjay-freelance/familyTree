@@ -1,0 +1,8 @@
+.tile {
+  display: flex;
+  margin: 4px;
+  border-radius: 8px;
+  flex: 1;
+  color: white;
+  padding: 4px
+}

@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import TreeMap from 'components/treemap';
+import SquareTreemap from 'components/squareTreemap';
 import useRequest from 'hooks/useRequest';
 import CheckBox from 'ui/checkBox';
 import DropDown from 'ui/dropDown';
@@ -69,19 +70,19 @@ function FamilyTree(props){
 
 	return (
 	<div>
-		<div className='family-tree-controls'>
+		{/*<div className='family-tree-controls'>
 			<DropDown options={attributes}
 								defaultValue='age'
 								onChange={attributeChangeHandler}>
 				Weight
 			</DropDown>
-		</div>
+		</div>*/}
 
 		<div className='family-tree'>
-			<TreeMap data={data}
+			<SquareTreemap data={data}
 							 valueAttribute={valueAttribute}
 							 sumIterator={sumIteratorMetadata[valueAttribute]}
-							 expandTree={expandTree} hidePath={true}/>
+							 hidePath={true} rows={4} cols={5}/>
 		</div>
 
 
