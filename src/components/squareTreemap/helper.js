@@ -1,4 +1,4 @@
-
+import  {childCountLayoutHashMap} from './hardcodedLayout'
 /*
 * Matrix (row x col) is Created with value 0
 * 0 - indicates cell is not assigned for square
@@ -117,7 +117,61 @@ function computeAndGetTilesFromData( data, rowsCount, colsCount) {
 }
 
 
+// Returns count of all squares
+// in a rectangle of size m x n
+/*
+*
+* Consider a 3×4 rectangle there are a total of 20 squares.
+* Number of squares of side 1 unit: 3×4=12.
+* Number of squares of side 2 units: 2×3=(3−1)×(4−1)=6.
+* Number of squares of side 3 units: 1×2=(3−2)×(4−2)=2.
+* Total number of squares =12+6+2=20.
+* */
+function countSquaresInARectangle(rows, cols) {
+	const squaresCountByGridSize = []
+	for (let i = 0; (i < rows && i < cols); i++){
+		const squaresCount = (rows - i) * (cols - i)
+		squaresCountByGridSize.push(squaresCount );
+	}
+	return squaresCountByGridSize
+}
+
+function getClosestFactorForNumber(area){
+		let areaSqrt = Math.floor(Math.sqrt(area));
+		while (area % areaSqrt != 0) {
+			areaSqrt--;
+		}
+		return [areaSqrt, area / areaSqrt];
+}
+
+function normalizeTo(array, end){
+	const ratio = Math.max(...array) / end;
+
+	return array.map(function (val) {
+		return Math.round(val / ratio);
+	});
+}
+
+function areaOfAllSquares (array) {
+	let sum = 0;
+	for (let i = 0; i < array.length; i++) {
+		const side = array[i];
+		sum = sum + (side * side);
+	}
+	return sum;
+}
+
+
+function getRowsAndColumnsFromChildren(values){
+	const normalizedValues = normalizeTo(values,5);
+	const area = areaOfAllSquares(normalizedValues);
+	const factor = getClosestFactorForNumber(area);
+
+	return factor;
+}
+
+
+
 export {
-	computeAndGetTilesFromData,
 	getScale
 }

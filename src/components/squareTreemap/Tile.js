@@ -2,8 +2,8 @@ import React from "react";
 import './style.css';
 
 export default function SquareTile(props){
-	const { x, y, unit, data, colorScale, scale} = props;
-	//const {name} = data;
+	const { x, y, unit, data, colorScale, scale, onClick} = props;
+	const {name} = data;
 
 	const colorValue = colorScale(x);
 
@@ -22,16 +22,12 @@ export default function SquareTile(props){
 		backgroundColor: colorValue
 	};
 
-	const contentStyle = {
-		color: 'white',
-		padding: '4px'
-	};
 
 	return (
 	<div style={tileStyle}>
-		<div className='tile' style={contentContainerStyle}>
-			<div style={contentStyle}>
-				<label>hi</label>
+		<div className='tile' style={contentContainerStyle} onClick={onClick}>
+			<div className='tile-content'>
+				<label>{name}</label>
 			</div>
 		</div>
 	</div>

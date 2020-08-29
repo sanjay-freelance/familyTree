@@ -1,13 +1,9 @@
 import React, {useState} from 'react';
-import TreeMap from 'components/treemap';
 import SquareTreemap from 'components/squareTreemap';
 import useRequest from 'hooks/useRequest';
-import CheckBox from 'ui/checkBox';
-import DropDown from 'ui/dropDown';
 
 import './app.css';
-import {data} from './data';
-import {sumIteratorMetadata} from './attributeMetaData';
+import {data as givingData} from './mockData/categoriesMock';
 
 let id = 0;
 function addIdToData(data){
@@ -30,62 +26,37 @@ export default function App(props){
 	if(loading){
 		treeMapUI = 'Loading .... ';
 	} else if(error){
-		treeMapUI = <FamilyTree data={data}/>;
+		treeMapUI = <FundsTree data={givingData}/>;
 		console.log(error.message);
 		console.log('Due to Error Message loading Local Data');
 	} else if(response){
-		treeMapUI = <FamilyTree data={response}/>;
+		treeMapUI = <FundsTree data={response}/>;
 	}
 
 	return (
 		<div className='app'>
-			<h2>Family Tree</h2>
+			<h2>Funds Tree</h2>
 			{treeMapUI}
 		</div>
 	)
 }
 
 
-function FamilyTree(props){
+function FundsTree(props){
 	const {data} = props;
-	/*
-	* Hack: If server Data Dont have Id,
-	* we need to manually add Id so that UI Change when tree is rendered at sublevel, state will be maintained
-	* */
-	addIdToData(data);
-	const [valueAttribute, setValueAttribute] = useState('age');
-	const [expandTree, setExpandTree] = useState(false);
 
-	const attributes = Object.keys(data).filter((attribute)=>{
-		return !isNaN(data[attribute])
-	});
 
-	function attributeChangeHandler(attribute){
-		setValueAttribute(attribute);
-	}
-
-	function expandChangeHandler(checked){
-		setExpandTree(checked);
+	const categoryData = {
+		name: 'Category',
+		children: data,
+		id: 0
 	}
 
 	return (
 	<div>
-		{/*<div className='family-tree-controls'>
-			<DropDown options={attributes}
-								defaultValue='age'
-								onChange={attributeChangeHandler}>
-				Weight
-			</DropDown>
-		</div>*/}
-
 		<div className='family-tree'>
-			<SquareTreemap data={data}
-							 valueAttribute={valueAttribute}
-							 sumIterator={sumIteratorMetadata[valueAttribute]}
-							 hidePath={true} rows={4} cols={5}/>
+			<SquareTreemap data={categoryData} factor={100}/>
 		</div>
-
-
 	</div>
 	)
 }

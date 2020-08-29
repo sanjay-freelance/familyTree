@@ -3,17 +3,16 @@ import {getAncestorsPathFor} from "d3Helper";
 import './style.css';
 
 export default function BreadCrumbs(props){
-	const {node, onItemClick} = props;
+	const {node, path, onItemClick} = props;
 
-	const breadCrumbItems = getAncestorsPathFor(node);
+	const breadCrumbItems = path ? path : getAncestorsPathFor(node);
 	if(!breadCrumbItems){
 		return null;
 	}
 
 	const lastIndex = breadCrumbItems.length - 1;
 	const breadsCrumbUI =  breadCrumbItems.map((item, index)=>{
-		const {data} = item;
-		const {name} = data;
+		const {name} = item;
 
 		const itemUI = (index == lastIndex) ? name : (
 			<span>

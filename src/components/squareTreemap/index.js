@@ -1,35 +1,45 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {getOrdinalScaleGetter} from 'd3Helper';
-import {computeAndGetTilesFromData, getScale} from "./helper";
+import {getScale} from "./helper";
+import {getTilesForChildren} from "./hardcodedLayout";
 
 import Tile from './Tile';
 
 import './style.css';
+import BreadCrumbs from "components/breadcrumbs";
 
 export default function SquareTreemap(props){
-	const {data, valueAttribute = 'age', hidePath = false , rows, cols, factor = 100} = props;
+	const {data, factor = 100} = props;
 
-	// todo: Needed for drill down logic
-	const [rootTile, setRootTile] = useState(null);
+	const rootData = useRef(data);
+	const [root, setRoot] = useState(data);
+	const [path, setPath] = useState([]);
+	const [zoombale, setZoomable] = useState(true);
 
 	const colorScaleRef = useRef(getOrdinalScaleGetter());
-	// todo: height and weight need to be determined by number of children and their values
 	const scaleRef = useRef(getScale(factor)); // 3 / 4 ratio multiplied by factor 100 = width 300, height = 400
 
-	// todo: Needed for drill down logic
-	const selectedNodeRef = useRef(null);
-	const rootNodeRef = useRef(null);
-
-	// todo: Needed for drill down logic
-	useEffect(()=>{
-
-	},[rows, cols, valueAttribute]);
-
-	const tiles = computeAndGetTilesFromData(data,rows,cols);
+	const {tiles, rows, cols} = getTilesForChildren(root.children);
 
 	/* handlers */
-	function setSelectedNodeAsRootNode(nodeWithTreeAndLayoutValues)  {
+	function setSelectedDataAsRoot(data)  {
+		if(data.children.length == 10 || data.children.length == 9) {
+			setRoot(data);
+			if(rootData.current !== data){
+				setPath([
+					rootData.current,
+					data
+				]);
+				setZoomable(false);
+			} else {
+				setPath([]);
+				setZoomable(true);
+			}
 
+		}
+		else {
+			alert(`We need to prepare hard code layout for this count (${data.children.length})`);
+		}
 	};
 
 	/* UI rendering */
@@ -37,8 +47,10 @@ export default function SquareTreemap(props){
 	const scale = scaleRef.current;
 	if (tiles && tiles.length > 0) {
 		tilesUI = tiles.map((tile, index)=>{
-			const {x, y, unit, data} = tile;
+			const {layout, data} = tile;
+			const {x, y, unit} = layout;
 			return <Tile key={index}
+									 onClick={zoombale ? ()=> {setSelectedDataAsRoot(data)} : null}
 									 data={data}
 									 x={x} y={y} unit={unit}
 									 scale={scale} colorScale={colorScaleRef.current}/>
@@ -66,6 +78,7 @@ export default function SquareTreemap(props){
 
 	return (
 	<div className='tree-map'>
+		{!zoombale ?  <BreadCrumbs path={path} onItemClick={setSelectedDataAsRoot}/> : null}
 		<div style={relativeContainerStyle}>
 			<div style={absoluteContainerStyle}>
 				{tilesUI}

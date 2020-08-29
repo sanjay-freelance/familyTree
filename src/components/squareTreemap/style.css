@@ -3,6 +3,21 @@
   margin: 4px;
   border-radius: 8px;
   flex: 1;
+  padding: 4px;
+  overflow: hidden;
+}
+
+.tile-content {
+  display: flex;
+  align-items: flex-end;
+  padding: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
   color: white;
-  padding: 4px
+  font-size: 12px;
+}
+
+.tile-content label {
+  overflow: hidden;
+  text-overflow: ellipsis
 }
