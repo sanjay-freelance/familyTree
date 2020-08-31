@@ -6,10 +6,16 @@ import DropDown from 'ui/dropDown';
 
 import './app.css';
 import {data} from './data';
-import {sumIteratorMetadata} from './attributeMetaData';
+import {iteratorMetadata} from './attributeMetaData';
 
 let id = 0;
-function addIdToData(data){
+function addIdToData(originalData, addRoot = false){
+	let data = addRoot ? {
+		name: 'Categories',
+		count: 1,
+		children: originalData
+	} :originalData;
+
 	data.dataId = id;
 	id = id + 1;
 	if(data.children){
@@ -17,6 +23,7 @@ function addIdToData(data){
 			addIdToData(data);
 		})
 	}
+	return data
 }
 
 export default function App(props){
@@ -38,6 +45,7 @@ export default function App(props){
 
 	return (
 		<div className='app'>
+			<Header/>
 			<h2>Family Tree</h2>
 			{treeMapUI}
 		</div>
@@ -46,13 +54,13 @@ export default function App(props){
 
 
 function FamilyTree(props){
-	const {data} = props;
+	let {data} = props;
 	/*
 	* Hack: If server Data Dont have Id,
 	* we need to manually add Id so that UI Change when tree is rendered at sublevel, state will be maintained
 	* */
-	addIdToData(data);
-	const [valueAttribute, setValueAttribute] = useState('age');
+	data = addIdToData(data, true);
+	const [valueAttribute, setValueAttribute] = useState('count');
 	const [expandTree, setExpandTree] = useState(false);
 
 	const attributes = Object.keys(data).filter((attribute)=>{
@@ -67,11 +75,16 @@ function FamilyTree(props){
 		setExpandTree(checked);
 	}
 
+	function imageGetter(data){
+		// fetch url property from data and return them
+		return `https://cdn.givingcompass.org/wp-content/uploads/2020/03/25153430/shutterstock_654681745-400x225.jpg`
+	}
+
 	return (
 	<div>
 		<div className='family-tree-controls'>
 			<DropDown options={attributes}
-								defaultValue='age'
+								defaultValue='count'
 								onChange={attributeChangeHandler}>
 				Weight
 			</DropDown>
@@ -84,13 +97,37 @@ function FamilyTree(props){
 
 		<div className='family-tree'>
 			<TreeMap data={data}
+							 width={680} height={400}
+							 imageGetter={imageGetter}
 							 valueAttribute={valueAttribute}
-							 sumIterator={sumIteratorMetadata[valueAttribute]}
+							 iterator={iteratorMetadata[valueAttribute]}
 							 expandTree={expandTree}/>
 		</div>
 
 
 	</div>
+	)
+}
+
+
+function Header(props){
+	return (
+		<div className='header'>
+			<div className='logo-control-container'>
+				<div className='logo'>Louise</div>
+				<div className='controls'>
+					<div className='gift-box'>IC</div>
+					<div className='user'>user</div>
+				</div>
+			</div>
+			<div className='nav-container'>
+				<ul className='nav'>
+					<li>Give</li>
+					<li>Family</li>
+					<li>Share</li>
+				</ul>
+			</div>
+		</div>
 	)
 }
 

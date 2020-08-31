@@ -32,3 +32,117 @@
   border: 1px solid grey;
   border-radius: 8px;
 }
+
+/*
+Relative (header)
+ 1. absolute (logo and controls)
+ 2. absolute (Navigation)
+
+
+Use flex to center them
+since relative (header) dont have stackable child( Non absolute child)
+we have manually give width and  height
+
+set absolute children (top, right, bottom, left ) to 0px , so that they will take exact dimension as its parent
+in this case header
+
+So now for navigation div (absolute child)  takes entire screen width
+when we set flex values to center, they will ensure they are always center
+irrespective of control and logo position
+
+why?
+both the absolute children are stacked up on each, instead of next to each other
+*/
+
+.header{
+  position: relative;
+  height: 60px;
+  width:100%;
+
+  display: flex;
+}
+
+.logo-control-container{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-container{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav {
+  display: flex;
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+
+.nav li{
+  padding: 8px 16px 8px 16px;
+  margin-left: 8px;
+  margin-right: 8px;
+  background: #faaa4d;
+  border-radius: 16px;
+  color: #59191c;
+}
+
+.logo {
+  background: #4b0b18;
+  color: white;
+  display: flex;
+  padding: 12px 42px 12px 12px;
+  border-radius: 1px 1px 340px 1px;
+}
+
+.controls{
+  display: flex;
+  align-items: center;
+}
+
+.user{
+  color: #4b0b18;
+  width: 50Px;
+  height: 50Px;
+  border-radius: 50%;
+  border: 2px solid #4b0b18;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gift-box{
+  color: #4b0b18;
+  width: 50Px;
+  height: 50Px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+input {
+  font-size: 14px;
+  border-radius: 20px;
+  height: 30px;
+  transition: all 0.5s;
+  color: #6e6f6e;
+  text-align: center;
+}
+

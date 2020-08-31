@@ -9,13 +9,14 @@ import './style.css';
 
 
 export default function TreeMap(props){
-	const {data, width = 500, height = 500, valueAttribute = 'age', expandTree = false, sumIterator} = props;
+	const {data, imageGetter, width = 500, height = 500, valueAttribute = 'count', expandTree = false, iterator, asSum = false} = props;
 
 	/* Hooks */
 	const [rootNode, setRootNode] = useState(null);
 	const xScaleRef = useRef(null);
 	const yScaleRef = useRef(null);
 	const colorScaleRef = useRef(null);
+	const opacityScaleRef = useRef(null);
 	// These Ref are required when we toggle expand tree value
 	const selectedNodeRef = useRef(null);
 	const rootNodeRef = useRef(null);
@@ -25,9 +26,10 @@ export default function TreeMap(props){
 		xScaleRef.current = getLinearScaleGetter(width);
 		yScaleRef.current = getLinearScaleGetter(height);
 		colorScaleRef.current = getOrdinalScaleGetter();
+		opacityScaleRef.current = getLinearScaleGetter(10, 1);
 
 		// 2. Compute Tree Attributes ( value, height, depth)
-		const computedRootNode = computeTreeAttributesAndGetRoot(data, sumIterator);
+		const computedRootNode = computeTreeAttributesAndGetRoot(data, iterator,asSum);
 
 		// 3. Compute Layout Values (x0, x1, y0, y1) for rendering
 		computeLayoutValues(width, height, computedRootNode);
@@ -80,19 +82,37 @@ export default function TreeMap(props){
 	if (nodes && nodes.length > 0) {
 		nodesUI = nodes.map((childNode)=>{
 			return <TreeNode key={childNode.data.dataId} node={childNode}
+											 imageGetter={imageGetter}
 											 onNodeClick={()=>setSelectedNodeAsRootNode(childNode)}
 											 xScale={xScaleRef.current}
 											 yScale={yScaleRef.current}
+											 opacityScale={opacityScaleRef.current}
 											 colorScale={colorScaleRef.current}/>
 		});
 	}
 
+	const relativeContainerStyle = {
+		position: 'relative',
+		width: width,
+		height: height
+	};
+
+	const absoluteContainerStyle = {
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		width: width,
+		height: height
+	};
+
 	return (
 	<div className='tree-map'>
 		<BreadCrumbs node={rootNode} onItemClick={setSelectedNodeAsRootNode}/>
-		<svg height={height} width={width}>
-			{nodesUI}
-		</svg>
+		<div style={relativeContainerStyle}>
+			<div style={absoluteContainerStyle}>
+				{nodesUI}
+			</div>
+		</div>
 	</div>
 	)
 }

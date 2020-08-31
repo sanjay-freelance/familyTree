@@ -6,17 +6,24 @@ import {hierarchy} from "d3-hierarchy";
 * 2. Height (Children Count)
 * 3. Value (Based on the iterator we give for Sum )
 * */
-function getRootNodeWithTreeValues(data, sumIterator){
+function getRootNodeWithTreeValues(data, iterator, asSum = false){
+	if(asSum){
+		return hierarchy(data)
+		.sum(iterator)
+		.sort(function (a, b) {
+			return b.height - a.height || b.value - a.value
+		})
+	}
 	return hierarchy(data)
-	.sum(sumIterator)
+	.count(iterator)
 	.sort(function (a, b) {
 		return b.height - a.height || b.value - a.value
 	})
 }
 
 
-function computeTreeAttributesAndGetRoot(data, sumIterator){
-	const rootNode = getRootNodeWithTreeValues(data,sumIterator);
+function computeTreeAttributesAndGetRoot(data, iterator, asSum){
+	const rootNode = getRootNodeWithTreeValues(data,iterator, asSum);
 	//  computing tree Values for the descendants nodes of root node
 	rootNode.descendants();
 	return rootNode;
